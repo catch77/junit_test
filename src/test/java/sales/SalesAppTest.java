@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -62,5 +63,24 @@ public class SalesAppTest {
 		when(sales.getEffectiveTo()).thenReturn(endDate.getTime());
 		Assert.assertEquals(true, salesApp.isSalesOutOfDate(sales));
 	}
+
+	@Test
+    public void testGetFilteredReportDateList_givenMaxRow100AndReportDataListSize1_thenFilteredReportDataList() {
+//	    SalesApp salesApp = spy(new SalesApp());
+//        List<SalesReportData> reportDataList = Arrays.asList(new SalesReportData());
+//        verify(salesApp, times(1)).getFilteredReportDateList(100, reportDataList);
+
+    }
+
+    @Test
+    public void testGetSalesReportData_giveSales_thenReturnReportDataList() {
+        List<SalesReportData> reportDataList = Arrays.asList(new SalesReportData());
+        when(salesReportDao.getReportData(any())).thenReturn(reportDataList);
+
+        List<SalesReportData> result = salesApp.getSalesReportData(true, reportDataList, any());
+
+        Assert.assertEquals(1, result.size());
+        verify(salesReportDao, times(1)).getReportData(any());
+    }
 
 }

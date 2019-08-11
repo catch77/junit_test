@@ -7,11 +7,11 @@ import java.util.List;
 
 public class SalesApp {
 
+	SalesReportDao salesReportDao = new SalesReportDao();
+
 	public void generateSalesActivityReport(String salesId, int maxRow, boolean isNatTrade, boolean isSupervisor) {
 
 		SalesDao salesDao = new SalesDao();
-		SalesReportDao salesReportDao = new SalesReportDao();
-
 
 		List<SalesReportData> filteredReportDataList = new ArrayList<SalesReportData>();
 		
@@ -23,7 +23,7 @@ public class SalesApp {
 
 		if (isSalesOutOfDate(sales)) return;
 
-		List<SalesReportData> reportDataList = getSalesReportData(isSupervisor, salesReportDao, filteredReportDataList, sales);
+		List<SalesReportData> reportDataList = getSalesReportData(isSupervisor, filteredReportDataList, sales);
 
 		getFilteredReportDateList(maxRow, reportDataList);
 
@@ -58,7 +58,7 @@ public class SalesApp {
 		filteredReportDataList = tempList;
 	}
 
-	protected List<SalesReportData> getSalesReportData(boolean isSupervisor, SalesReportDao salesReportDao, List<SalesReportData> filteredReportDataList, Sales sales) {
+	protected List<SalesReportData> getSalesReportData(boolean isSupervisor, List<SalesReportData> filteredReportDataList, Sales sales) {
 		List<SalesReportData> reportDataList = salesReportDao.getReportData(sales);
 
 		for (SalesReportData data : reportDataList) {
